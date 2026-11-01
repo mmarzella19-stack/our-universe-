@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌌 My Universe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #050510, #101233, #1a237e);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #82b1ff;
+            text-shadow: 0 0 20px #42a5f5;
+        }
+
+        header p {
+            color: #b388ff;
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        nav button {
+            background: rgba(103, 58, 183, 0.4);
+            border: 1px solid #b388ff;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        nav button:hover, nav button.active {
+            background: #673ab7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            display: none;
+            margin-bottom: 50px;
+        }
+
+        section.aktif {
+            display: block;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ea80fc;
+            margin-bottom: 30px;
+        }
+
+        /* === FLASHCARD === */
+        .flashcard-wrapper {
+            perspective: 1000px;
+            margin: 0 auto 30px;
+            width: 340px;
+            height: 220px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            cursor: pointer;
+        }
+
+        .flashcard.dibalik {
+            transform: rotateY(180deg);
+        }
+
+        .card-depan, .card-belakang {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            backface-visibility: hidden;
+            box-shadow: 0 0 20px rgba(103, 58, 183, 0.5);
+        }
+
+        .card-depan {
+            background: linear-gradient(135deg, #311b92, #4527a0);
+            border: 2px solid #7c4dff;
+            font-size: 1.1em;
+        }
+
+        .card-belakang {
+            background: linear-gradient(135deg, #006064, #00838f);
+            border: 2px solid #00e5ff;
+            transform: rotateY(180deg);
+            font-size: 0.98em;
+            line-height: 1.6;
+        }
+
+        .nav-kartu {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .nav-kartu button {
+            background: #673ab7;
+            border: none;
+            color: #fff;
+            padding: 10px 25px;
+            margin: 0 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: 0.2s;
+        }
+
+        .nav-kartu button:hover {
+            background: #9575cd;
+        }
+
+        .nomor-kartu {
+            color: #ce93d8;
+            margin: 10px;
+        }
+
+        /* === TATA SURYA === */
+        .planet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .planet-kartu {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #7c4dff;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .planet-kartu:hover {
+            transform: translateY(-5px);
+            border-color: #ea80fc;
+        }
+
+        .planet-emoji {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #9fa8da;
+            font-size: 0.9em;
+            border-top: 1px solid #303f9f;
+            margin-top: 30px;
+        }
+
+        .petunjuk {
+            text-align: center;
+            color: #b388ff;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌌 My Universe</h1>
+    <p>Belajar & Main — Jelajahi Misteri Alam Semesta</p>
+</header>
+
+<nav>
+    <button class="tab-btn aktif" onclick="bukaHalaman('beranda')">🏠 Beranda</button>
+    <button class="tab-btn" onclick="bukaHalaman('flashcard')">🃏 Flashcard</button>
+    <button class="tab-btn" onclick="bukaHalaman('tatasurya')">🪐 Tata Surya</button>
+    <button class="tab-btn" onclick="bukaHalaman('fakta')">✨ Fakta Seru</button>
+</nav>
+
+<div class="container">
+
+    <!-- === BERANDA === -->
+    <section id="beranda" class="aktif">
+        <h2>👋 Selamat Datang di My Universe!</h2>
+        <p style="text-align:center; font-size:1.1em; line-height:1.8; color:#e1bee7;">
+            🌍 Alam semesta itu luas banget, penuh rahasia yang menunggu kamu jelajahi!
+            Di sini kamu bisa belajar sambil bermain pakai <strong>kartu cerdas</strong> — 
+            tinggal ketuk kartunya untuk lihat jawabannya. Yuk, mulai petualanganmu! 🚀
+        </p>
+        <br>
+        <div style="text-align:center;">
+            <p style="font-size:1.2em;">👉 Klik menu <strong>🃏 Flashcard</strong> untuk mulai belajar!</p>
+        </div>
+    </section>
+
+    <!-- === FLASHCARD === -->
+    <section id="flashcard">
+        <h2>🃏 Kartu Cerdas Antariksa</h2>
+        <p class="petunjuk">💡 Ketuk kartunya untuk membalik & lihat jawabannya</p>
+
+        <div class="flashcard-wrapper">
+            <div class="flashcard" id="kartu" onclick="balikKartu()">
+                <div class="card-depan" id="isiDepan">
+                    Apa planet terdekat dengan Matahari? ☀️
+                </div>
+                <div class="card-belakang" id="isiBelakang">
+                    Merkurius! 🪨<br>Jaraknya sekitar 58 juta km dari Matahari.
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-kartu">
+            <button onclick="kartuSebelumnya()">⬅️ Sebelumnya</button>
+            <span class="nomor-kartu" id="nomorKartu">1 / 12</span>
+            <button onclick="kartuBerikutnya()">Berikutnya ➡️</button>
+        </div>
+    </section>
+
+    <!-- === TATA SURYA === -->
+    <section id="tatasurya">
+        <h2>🪐 Planet-Planet Kita</h2>
+        <div class="planet-grid">
+            <div class="planet-kartu">
+                <div class="planet-emoji">☀️</div>
+                <h3>Matahari</h3>
+                <p>Bintang pusat tata surya kita</p>
+            </div>
+            <div class="planet-kartu">
+                <div class="planet-emoji">🪨</div>
+                <h3>Merkurius</h3>
+                <p>Planet terkecil & terdekat</p>
+            </div>
+            <div class="planet-kartu">
+                <div class="planet-emoji">🌕</div>
+                <h3>Venus</h3>
+                <p>Planet terpanas</p>
+            </div>
+            <div class="planet-kartu">
+                <div class="planet-emoji">🌍</div>
+                <h3>Bumi</h3>
+                <p>Rumah kita</p>
+            </div>
+            <div class="planet-kartu">
+                <div class="planet-emoji">🔴</div>
+                <h3>Mars</h3>
+                <p>Planet Merah</p>
+            </div>
+            <div class="planet-kartu">
+                <div class="planet-emoji">🟠</div>
+                <h3>Jupiter</h3>
+                <p>Planet terbesar</p>
+            </div>
+            <div class="planet-kartu">
+                <div class="planet-emoji">💍</div>
+                <h3>Saturnus</h3>
+                <p>Bercincin indah</p>
+            </div>
+            <div class="planet-kartu">
+                <div class="planet-emoji">🔵</div>
+                <h3>Uranus</h3>
+                <p>Berputar miring</p>
+            </div>
+            <div class="planet-kartu">
+                <div class="planet-emoji">💙</div>
+                <h3>Neptunus</h3>
+                <p>Planet terjauh</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- === FAKTA SERU === -->
+    <section id="fakta">
+        <h2>✨ Fakta Seru Antariksa</h2>
+        <div style="line-height:2; font-size:1em;">
+            <p>🌟 <strong>Di luar angkasa, tidak ada suara</strong> — karena tidak ada udara, sunyi senyap!</p>
+            <p>🌞 <strong>Cahaya Matahari butuh 8 menit</strong> untuk sampai ke Bumi</p>
+            <p>🌙 <strong>Bulan tidak punya cahaya sendiri</strong> — hanya memantulkan cahaya Matahari</p>
+            <p>🌌 <strong>Di Bima Sakti ada miliaran bintang</strong> — sekitar 100–400 miliar!</p>
+            <p>☄️ <strong>"Bintang jatuh" bukan bintang</strong> — itu batuan luar angkasa yang terbakar di atmosfer</p>
+            <p>🔭 <strong>Astronaut di ISS melihat 16 kali matahari terbit setiap hari!</strong></p>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    🌌 My Universe — Belajar Sambil Bermain © 2026
+</footer>
+
+<script>
+    // === ISI FLASHCARD ===
+    const kartu = [
+        { depan: "Planet terdekat dengan Matahari? ☀️", belakang: "Merkurius! 🪩<br>Jaraknya ±58 juta km dari Matahari." },
+        { depan: "Planet terpanas di tata surya? 🔥", belakang: "Venus! 🌡️<br>Suhunya bisa sampai 465°C, lebih panas dari Merkurius!" },
+        { depan: "Satu-satunya planet yang punya kehidupan? 🌱", belakang: "Bumi! 🌍<br>Karena punya air dan udara yang pas untuk hidup." },
+        { depan: "Mengapa Mars disebut Planet Merah? 🔴", belakang: "Karena tanahnya kaya akan karat besi, jadi warnanya kemerahan." },
+        { depan: "Planet terbesar di tata surya? 📦", belakang: "Jupiter! 🪐<br>Bisa menampung lebih dari 1.300 Bumi di dalamnya!" },
+        { depan: "Cincin indah di planet mana? 💍", belakang: "Saturnus! 🪐<br>Cincinnya terbuat dari batu, es, dan debu." },
+        { depan: "Mengapa Uranus itu unik? 🤔", belakang: "Karena ia berputar miring! Kemiringannya hampir 90 derajat." },
+        { depan: "Planet terjauh dari Matahari? ❄️", belakang: "Neptunus! 💙<br>Sangat dingin, suhunya sekitar -214°C." },
+        { depan: "Apa itu Galaksi Bima Sakti? 🌌", belakang: "Tempat tinggal tata surya kita. Bentuknya seperti piringan berputar." },
+        { depan: "Apa yang membuat gravitasi begitu kuat di lubuk hitam? 🕳️", belakang: "Materinya dipadatkan sangat rapat, tak ada yang bisa lolos, bahkan cahaya!" },
+        { depan: "Berapa lama cahaya Matahari sampai ke Bumi? ⏱️", belakang: "±8 menit! Kalau Matahari padam sekarang, kita baru tahu 8 menit lagi." },
+        { depan: "Astronaut di luar angkasa melayang karena? 🚀", belakang: "Karena di sana gravitasi sangat lemah, mereka jatuh lambat sekaligus maju cepat." }
+    ];
+
+    let urutan = 0;
+    let sedangTerbalik = false;
+
+    function bukaHalaman(id) {
+        // Sembunyikan semua halaman
+        document.querySelectorAll('section').forEach(s => s.classList.remove('aktif'));
+        // Tampilkan yang dipilih
+        document.getElementById(id).classList.add('aktif');
+        // Reset tombol tab
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('aktif'));
+        event.target.classList.add('aktif');
+        // Kembalikan kartu ke posisi awal
+        sedangTerbalik = false;
+        document.getElementById('kartu').classList.remove('dibalik');
+    }
+
+    function perbaruiKartu() {
+        document.getElementById('isiDepan').innerHTML = kartu[urutan].depan;
+        document.getElementById('isiBelakang').innerHTML = kartu[urutan].belakang;
+        document.getElementById('nomorKartu').textContent = `${urutan + 1} / ${kartu.length}`;
+        sedangTerbalik = false;
+        document.getElementById('kartu').classList.remove('dibalik');
+    }
+
+    function balikKartu() {
+        sedangTerbalik = !sedangTerbalik;
+        document.getElementById('kartu').classList.toggle('dibalik');
+    }
+
+    function kartuSebelumnya() {
+        urutan = urutan === 0 ? kartu.length - 1 : urutan - 1;
+        perbaruiKartu();
+    }
+
+    function kartuBerikutnya() {
+        urutan = urutan === kartu.length - 1 ? 0 : urutan + 1;
+        perbaruiKartu();
+    }
+</script>
+
+</body>
+</html>
